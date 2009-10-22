@@ -1,0 +1,3 @@
+<div id="project_<%= project.id %>" class="project">
+  <%= project.title %>
+</div>
