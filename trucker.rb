@@ -2,9 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'mongo_mapper'
 
-MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017, :auto_reconnect => true)
 MongoMapper.database = 'trucker-development'
-MongoMapper.ensure_indexes!
 
 class Project
   include MongoMapper::Document
@@ -12,29 +10,31 @@ class Project
   key :title, String, :required => true
 end
 
-# class Story
-#   include MongoMapper::Document
-#   
-#   key :project_id, String
-#   key :title, String
-#   key :description, String
-#   key :points, Integer
-# end
+helpers do
+  def partial(name, locals={})
+    erb "_#{name}".to_sym, :layout => false, :locals => locals
+  end
+end
 
 get '/' do
-  @projects = Project.all
   erb :index
 end
 
-get '/projects.json' do
-  Project.all.to_json
+get '/p.js' do
+  projects = Project.all
+  {:html => {'#content' => partial(:projects, :projects => projects)}}.to_json
 end
 
-post '/projects' do
+get '/p/:id.js' do
+  project = Project.find(params[:id])
+  {:html => {'#content' => partial(:show, :project => project)}}.to_json
+end
+
+post '/p' do
   project = Project.new(params[:project])
   
   if project.save
-    project
+    {:append => {'#projects' => partial(:project, :project => project)}}
   else
     {:errors => project.errors.full_messages}
   end.to_json
