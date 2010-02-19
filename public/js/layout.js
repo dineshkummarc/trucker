@@ -32,7 +32,7 @@
       $(this).removeErrors().prepend(new FormErrors(errors).html());
     });
   };
-  
+
   $.fn.removeErrors = function() {
     return this.each(function() {
       $(this).find('.errorExplanation').remove();
@@ -44,7 +44,7 @@
       $(this).find('input[type=submit]').enable();
     });
   };
-  
+
   $.fn.disableSubmits = function() {
     return this.each(function() {
       $(this).find('input[type=submit]').enable(false);
@@ -57,9 +57,20 @@ var Layout = {
     $.ajax({
       url      : url,
       dataType : 'json',
-      success  : function(json) {
-        Layout.applyJSON(json);
-      }
+      success  : Layout.applyJSON
+    });
+  },
+
+  destroy: function(url, data) {
+    data = data || {};
+    data._method = 'delete';
+    
+    $.ajax({
+      url      : url,
+      type     : 'post',
+      dataType : 'json',
+      data     : data,
+      success  : Layout.applyJSON
     });
   },
 
@@ -76,6 +87,9 @@ var Layout = {
             $(selector).append(json[key][selector]);
           }
           break;
+        case 'remove':
+          $(json[key].join(',')).remove();
+          break;
       }
     }
   }
@@ -88,8 +102,7 @@ $('form').live('submit', function(event) {
     dataType: 'json',
     success: function(json) {
       if (json.errors) {
-        $form.showErrors(json.errors);
-        $form.trigger('form:error', [json]);
+        $form.trigger('form:error', [json]).showErrors(json.errors);
       } else {
         Layout.applyJSON(json);
         $form.trigger('form:success', [json]).removeErrors().resetForm();
@@ -102,6 +115,11 @@ $('form').live('submit', function(event) {
       $form.enableSubmits().trigger('form:complete');
     }
   });
-  
+
+  return false;
+});
+
+$('a.delete').live('click', function(event) {
+  Layout.destroy($(this).attr('href'));
   return false;
 });

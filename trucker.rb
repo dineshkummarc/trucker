@@ -26,7 +26,7 @@ get '/p.js' do
 end
 
 get '/p/:id.js' do
-  project = Project.find(params[:id])
+  project = Project.find!(params[:id])
   {:html => {'#content' => partial(:show, :project => project)}}.to_json
 end
 
@@ -38,4 +38,10 @@ post '/p' do
   else
     {:errors => project.errors.full_messages}
   end.to_json
+end
+
+delete '/p/:id' do
+  project = Project.find!(params[:id])
+  project.destroy
+  {:remove => ["#project_#{project.id}"]}.to_json
 end
