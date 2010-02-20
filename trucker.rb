@@ -23,7 +23,7 @@ get '/' do
 end
 
 get '/p.js' do
-  projects = Project.all
+  projects = Project.all(:order => :title.asc)
   {:html => {'#content' => partial(:projects, :projects => projects)}}.to_json
 end
 
