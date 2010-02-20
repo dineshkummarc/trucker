@@ -3,7 +3,7 @@ module Macros
     def self.included(base)
       base.extend ClassMethods
     end
-    
+
     module ClassMethods
       def model
         self.name.to_s.gsub('Test', '').constantize
@@ -18,7 +18,7 @@ module Macros
           end
         end
       end
-      
+
       def should_have_many(*associations)
         associations.each do |association|
           test "should have many #{association}" do
@@ -28,7 +28,7 @@ module Macros
           end
         end
       end
-      
+
       def should_belong_to(*associations)
         associations.each do |association|
           test "should belong to #{association}" do
@@ -39,7 +39,7 @@ module Macros
         end
       end
     end
-    
+
     def model
       self.class.model
     end
