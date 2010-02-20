@@ -1,1 +1,0 @@
-<h2><a href="#/projects/">Projects</a> &raquo; <%= project.title %></h2>

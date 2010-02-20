@@ -1,3 +1,0 @@
-<div id="project_<%= project.id %>" class="project">
-  <a href="#/projects/<%= project.id %>"><%= project.title %></a>
-</div>
