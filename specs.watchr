@@ -34,6 +34,7 @@ end
 
 watch('test/test_helper\.rb') { system('clear'); run_all_tests }
 watch('trucker.rb')           { system('clear'); run_all_tests }
+watch('models.rb')            { system('clear'); run_all_tests }
 watch('test/.*/.*_test\.rb')  { |m| system('clear'); run_test_file(m[0]) }
 
 # Ctrl-\

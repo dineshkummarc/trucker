@@ -5,31 +5,9 @@ require 'sinatra'
 gem 'mongo_mapper', '0.7'
 require 'mongo_mapper'
 
-MongoMapper.database = 'trucker-development'
+MongoMapper.database = "trucker-#{ENV['RACK_ENV']}"
 
-class Project
-  include MongoMapper::Document
-  key :title, String, :required => true
-  
-  many :stories
-end
-
-class Story
-  include MongoMapper::Document
-  
-  key :body, String, :required => true
-  key :project_id, ObjectId, :required => true, :index => true
-  key :position, Integer, :default => 1
-  
-  belongs_to :project
-  
-  before_save :set_position
-  
-  private
-    def set_position
-      self.position = project.stories.map(&:position).max + 1
-    end
-end
+require 'models'
 
 helpers do
   def partial(name, locals={})
@@ -58,6 +36,16 @@ post '/p' do
     {:append => {'#projects' => partial(:project, :project => project)}}
   else
     {:errors => project.errors.full_messages}
+  end.to_json
+end
+
+post '/p/:id/s' do
+  story = Project.find!(params[:id]).stories.build(params[:story])
+
+  if story.save
+    {:append => {'#stories' => partial(:story, :story => story)}}
+  else
+    {:errors => story.errors.full_messages}
   end.to_json
 end
 

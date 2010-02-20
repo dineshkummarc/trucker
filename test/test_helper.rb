@@ -21,6 +21,10 @@ class Test::Unit::TestCase
   include Rack::Test::Methods
   include Macros::MongoMapper
 
+  def setup
+    MongoMapper.database.collections.map(&:remove)
+  end
+
   def self.test(name, &block)
     test_name = "test_#{name.gsub(/\s+/,'_')}".to_sym
     defined = instance_method(test_name) rescue false
@@ -59,7 +63,7 @@ class Test::Unit::TestCase
   def body
     last_response.body
   end
-  
+
   def json_body
     JSON.parse(body)
   end

@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class ProjectsTest < Test::Unit::TestCase
-  def setup
-    MongoMapper.database.collections.map(&:remove)
-  end
-
   test 'GET /p.js' do
     p1 = Factory(:project)
     p2 = Factory(:project)
