@@ -1,5 +1,8 @@
 require 'rubygems'
+gem 'sinatra', '0.9.4'
 require 'sinatra'
+
+gem 'mongo_mapper', '0.7'
 require 'mongo_mapper'
 
 MongoMapper.database = 'trucker-development'
