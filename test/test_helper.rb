@@ -13,10 +13,13 @@ require 'leftright'
 gem 'json', '1.2'
 require 'json'
 
+require 'macros/mongo_mapper'
+
 set :environment, :test
 
 class Test::Unit::TestCase
   include Rack::Test::Methods
+  include Macros::MongoMapper
 
   def self.test(name, &block)
     test_name = "test_#{name.gsub(/\s+/,'_')}".to_sym

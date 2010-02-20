@@ -1,2 +1,14 @@
 <h2><a href="#/">Projects</a> &raquo; <%= project.title %></h2>
 
+<form action="/p/<%= project.id %>/s" method="post" class="creator">
+  <p>
+    <input type="text" name="story[body]" value="" id="story_body" size="40" />
+    <input type="submit" name="submit" value="Add" />
+  </p>
+</form>
+
+<ul id="todos" class="list">
+  <% project.stories.each do |story| %>
+    <%= partial('story', :story => story) %>
+  <% end %>
+</ul>

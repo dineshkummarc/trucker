@@ -10,6 +10,25 @@ MongoMapper.database = 'trucker-development'
 class Project
   include MongoMapper::Document
   key :title, String, :required => true
+  
+  many :stories
+end
+
+class Story
+  include MongoMapper::Document
+  
+  key :body, String, :required => true
+  key :project_id, ObjectId, :required => true, :index => true
+  key :position, Integer, :default => 1
+  
+  belongs_to :project
+  
+  before_save :set_position
+  
+  private
+    def set_position
+      self.position = project.stories.map(&:position).max + 1
+    end
 end
 
 helpers do
