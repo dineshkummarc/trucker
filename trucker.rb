@@ -6,7 +6,6 @@ MongoMapper.database = 'trucker-development'
 
 class Project
   include MongoMapper::Document
-  
   key :title, String, :required => true
 end
 
@@ -32,7 +31,7 @@ end
 
 post '/p' do
   project = Project.new(params[:project])
-  
+
   if project.save
     {:append => {'#projects' => partial(:project, :project => project)}}
   else
