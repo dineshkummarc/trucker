@@ -12,12 +12,9 @@ div.errorExplanation ul     {margin:10px 0 10px 25px;}
 div.errorExplanation ul li  {}
 
 #wrapper          {margin:50px auto; padding:0; width:350px;}
-/*#todos li         {cursor:move;}*/
 
 ul.list           {margin:0; padding:0;}
 ul.list li        {margin:0; padding:5px 10px; list-style-type:none; border-bottom:1px solid #E8F1F6;}
 ul.list a.delete  {float:right; display:inline; margin:2px 0 0; font-size:10px;}
-/*input.complete    {margin:0 5px 0 0;}*/
-/*#completed        {color:#999;}*/
 
 div.loading       {position:absolute; top:0; right:10px; width:90px; margin:0; padding:5px 0; border:solid #C8DEE9; border-width:0 1px 1px; background:#E8F1F6; color:#333; text-align:center; line-height:1;}
