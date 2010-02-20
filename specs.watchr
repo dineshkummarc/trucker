@@ -15,6 +15,10 @@ def run_test_file(file)
   run %Q(ruby -I"test" #{file})
 end
 
+def run_all_tests
+  run %Q(ruby -I"test" test/all_tests.rb)
+end
+
 def growl(title, msg, img)
   %x{growlnotify -m #{msg.inspect} -t #{title.inspect} --image ~/.watchr/#{img}.png}
 end
@@ -28,7 +32,8 @@ def form_growl_message(str)
   end
 end
 
-# watch('test/test_helper\.rb') { run_all_tests }
+watch('test/test_helper\.rb') { system('clear'); run_all_tests }
+watch('trucker.rb')           { system('clear'); run_all_tests }
 watch('test/.*/.*_test\.rb')  { |m| system('clear'); run_test_file(m[0]) }
 
 # Ctrl-\

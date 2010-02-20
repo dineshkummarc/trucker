@@ -60,5 +60,4 @@ class Test::Unit::TestCase
   def json_body
     JSON.parse(body)
   end
-
 end
