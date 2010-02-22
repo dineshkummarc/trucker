@@ -15,8 +15,6 @@ require 'json'
 
 require 'macros/mongo_mapper'
 
-set :environment, :test
-
 class Test::Unit::TestCase
   include Rack::Test::Methods
   include Macros::MongoMapper
@@ -57,7 +55,7 @@ class Test::Unit::TestCase
   end
 
   def app
-    Sinatra::Application
+    Trucker.new
   end
 
   def body

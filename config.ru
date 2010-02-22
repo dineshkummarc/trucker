@@ -1,6 +1,4 @@
 require 'trucker'
 
-set :environment, :production
-set :run, false
-
-run Sinatra::Application
+Trucker.set :environment, :development
+run Trucker.new
